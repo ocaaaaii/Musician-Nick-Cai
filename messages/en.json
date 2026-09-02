@@ -49,5 +49,21 @@
     "title": "Page not found",
     "body": "What you're looking for doesn't exist, or is no longer available.",
     "backHome": "Back to home"
+  },
+  "lessons": {
+    "title": "Lessons",
+    "empty": "No lesson packages are available yet — feel free to reach out with the form below.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "details": "What would you like to learn, or what would you like to ask?",
+      "submit": "Send inquiry",
+      "submitting": "Sending…",
+      "success": "Your inquiry has been received — we'll be in touch soon!",
+      "errorGeneric": "Something went wrong. Please try again later.",
+      "fieldRequired": "This field is required",
+      "fieldInvalidEmail": "Please enter a valid email address"
+    }
   }
 }

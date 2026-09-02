@@ -18,7 +18,7 @@
 - [x] 3.3 建立 `src/components/sheets/WatermarkedPreview.tsx`：接收 `sampleImages` 陣列，以 GSAP 做 crossfade 輪播（自動播放＋圓點手動切換，尊重 `prefers-reduced-motion`），疊加 CSS 重複文字浮水印、`onContextMenu` 阻擋；單張或全部圖片載入失敗時優雅降級（跳過失敗圖片，全部失敗則顯示中性佔位底色）——預覽圖改用原生 `<img>` 而非 `next/image`，因為圖片來源（未來的 R2 網址）主機名稱無法預先寫進 `remotePatterns`
 - [x] 3.4 試聽按鈕呼叫 `useAudioPlayerStore().play(audioSampleUrl, title)`，不新建播放元件——已透過檢查 DOM 中 `<audio>` 元素與其 `getBoundingClientRect()`／computed style 確認確實掛載且可見
 - [x] 3.5 「加入購物車」按鈕以停用樣式呈現，附加「功能開發中」說明文字
-- [x] 3.6 新增 `src/app/[locale]/not-found.tsx`（套用設計系統，處理合法語系內找不到資源的情況）與 `src/app/not-found.tsx`（提供自己的 `<html>/<body>`，處理完全不匹配語系的邊緣情況）——套用時發現沒有這兩個檔案會讓 `notFound()` 觸發 hydration 錯誤與畫面空白，詳見 design.md 的 Risk 說明
+- [x] 3.6 新增 `src/app/[locale]/not-found.tsx`（套用設計系統，處理合法語系內找不到資源的情況）——套用時發現沒有這個檔案會讓 `notFound()` 觸發 hydration 錯誤與畫面空白，詳見 design.md 的 Risk 說明（該說明後續在 `lessons-page` change 又修正了一次，關於根層級 not-found 的處理方式，見 design.md 的修正備註）
 
 ## 4. 整體驗收
 

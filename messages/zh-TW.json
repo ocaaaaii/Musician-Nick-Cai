@@ -49,5 +49,21 @@
     "title": "找不到這個頁面",
     "body": "你要找的內容不存在，或已經下架。",
     "backHome": "回首頁"
+  },
+  "lessons": {
+    "title": "教學服務",
+    "empty": "目前尚未提供課程方案，歡迎透過下方表單詢問。",
+    "form": {
+      "name": "姓名",
+      "email": "Email",
+      "phone": "電話（選填）",
+      "details": "想學習的內容或想問的問題",
+      "submit": "送出詢問",
+      "submitting": "送出中…",
+      "success": "已收到你的詢問，會盡快與你聯繫！",
+      "errorGeneric": "送出時發生問題，請稍後再試。",
+      "fieldRequired": "此欄位為必填",
+      "fieldInvalidEmail": "請輸入有效的 Email 格式"
+    }
   }
 }

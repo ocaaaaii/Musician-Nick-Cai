@@ -40,7 +40,8 @@
 
 - [風險] 種子資料的 `sampleImages`／`audioSampleUrl` 是不存在的 placeholder 網址，圖片會 404、音檔會播放失敗 → 緩解：圖片容器對載入失敗做降級處理（顯示佔位圖形而非破圖圖示）；音訊播放失敗是瀏覽器原生行為（`<audio>` 標籤本身會安靜失敗或顯示原生錯誤），不特別攔截，待後台真正上傳檔案後即為正常路徑
 - [風險] 前端一次抓取全部已上架商品，商品量變大後效能會下降 → 緩解：已於 Non-Goals 註記為已知取捨，非本次規模需要處理
-- [風險，套用時發現，屬 i18n 路由架構缺口] `notFound()` 在 `[locale]` 路由結構下若沒有對應的 `not-found.tsx`，Next.js 會 fallback 到內建的根層級 404 元件，該元件會嘗試自己產生一份 `<html>/<body>`，與 `[locale]/layout.tsx` 既有的 `<html>` 衝突，觸發 `HierarchyRequestError`／hydration 錯誤（畫面整片空白，但 HTTP 狀態碼仍正確回傳 404，容易被誤判為「已經正常」）→ 修正：新增 `src/app/[locale]/not-found.tsx`（套用設計系統與翻譯，處理「合法語系內、資源不存在」的一般情況，本 change 的 Requirement 就是靠這個檔案滿足）與 `src/app/not-found.tsx`（提供自己的 `<html>/<body>`，只處理「完全不匹配任何語系」的邊緣情況）。這屬於 `i18n-setup` 路由架構原本就該有、但當初沒建立的檔案，記錄於此因為是在本 change 驗收 404 需求時才發現
+- [風險，套用時發現，屬 i18n 路由架構缺口] `notFound()` 在 `[locale]` 路由結構下若沒有對應的 `not-found.tsx`，Next.js 會 fallback 到內建的根層級 404 元件，該元件會嘗試自己產生一份 `<html>/<body>`，與 `[locale]/layout.tsx` 既有的 `<html>` 衝突，觸發 `HierarchyRequestError`／hydration 錯誤（畫面整片空白，但 HTTP 狀態碼仍正確回傳 404，容易被誤判為「已經正常」）→ 修正：新增 `src/app/[locale]/not-found.tsx`（套用設計系統與翻譯，處理「合法語系內、資源不存在」的一般情況，本 change 的 Requirement 就是靠這個檔案滿足）。這屬於 `i18n-setup` 路由架構原本就該有、但當初沒建立的檔案，記錄於此因為是在本 change 驗收 404 需求時才發現
+  **修正（`lessons-page` change 補充）**：本文件原本另外建議新增 `src/app/not-found.tsx` 並自帶 `<html>/<body>` 來處理「完全不匹配任何語系」的邊緣情況，實測後發現這個做法本身觸發 Next.js 14 的「multiple root layouts」限制（`not-found.tsx doesn't have a root layout` 錯誤），因為 `[locale]/layout.tsx` 而非一般的 `app/layout.tsx` 才是實際的根 layout。正確做法是在 `src/app/[locale]/[...catchAll]/page.tsx` 放一個呼叫 `notFound()` 的 catch-all 路由——這樣任何被 middleware 加上語系前綴、卻沒有對應頁面的路徑，會被這個「存在的頁面」攔截並觸發 `notFound()`，正常冒泡到同層的 `[locale]/not-found.tsx`；不需要（也不能用）自帶 `<html>` 的根層級 `not-found.tsx`。已移除原本建立的 `src/app/not-found.tsx`
 
 ## Open Questions
 
