@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "about": "소개",
+    "sheets": "악보 스토어",
+    "lessons": "레슨",
+    "commissions": "의뢰",
+    "cart": "장바구니",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "switchLocale": "언어"
+  },
+  "hero": {
+    "kicker": "피아니스트 / 작곡가",
+    "location": "타이베이",
+    "scroll": "스크롤"
+  },
+  "about": {
+    "title": "소개"
+  },
+  "featuredVideos": {
+    "title": "연주 영상"
+  },
+  "footer": {
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "email": "Email"
+  },
+  "audioPlayer": {
+    "play": "재생",
+    "pause": "일시정지",
+    "close": "플레이어 닫기"
+  }
+}

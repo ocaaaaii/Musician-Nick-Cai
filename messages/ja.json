@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "about": "アバウト",
+    "sheets": "楽譜ストア",
+    "lessons": "レッスン",
+    "commissions": "依頼",
+    "cart": "カート",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "switchLocale": "言語"
+  },
+  "hero": {
+    "kicker": "ピアニスト / 作曲家",
+    "location": "台北",
+    "scroll": "スクロール"
+  },
+  "about": {
+    "title": "アバウト"
+  },
+  "featuredVideos": {
+    "title": "演奏動画"
+  },
+  "footer": {
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "email": "Email"
+  },
+  "audioPlayer": {
+    "play": "再生",
+    "pause": "一時停止",
+    "close": "プレイヤーを閉じる"
+  }
+}

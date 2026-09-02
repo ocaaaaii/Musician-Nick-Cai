@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum CommissionType {
+  TRANSCRIPTION // 打譜/採譜
+  LESSON // 鋼琴教學
+  COLLABORATION // 合作邀約
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+/// 後台維護：個人品牌與首頁設定（單筆紀錄 Site Meta）
+model ProfileConfig {
+  id           String   @id @default("site-config")
+  heroTitle    String
+  heroSubtitle String
+  heroVideoUrl String?
+  aboutBio     String   @db.Text
+  styleTags    String[]
+  instagramUrl String?
+  youtubeUrl   String?
+  contactEmail String?
+  calendlyUrl  String?
+  updatedAt    DateTime @updatedAt
+}
+
+/// 後台維護：精選影片管理
+model FeaturedVideo {
+  id          String   @id @default(uuid())
+  title       String
+  youtubeUrl  String
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+/// 後台維護：樂譜商品管理
+model SheetMusic {
+  id             String      @id @default(uuid())
+  title          String
+  description    String?     @db.Text
+  price          Decimal     @db.Decimal(10, 2)
+  difficulty     String
+  genre          String
+  key            String?
+  pdfFileKey     String
+  sampleImages   String[]
+  audioSampleUrl String
+  isPublished    Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  orderItems     OrderItem[]
+}
+
+/// 後台維護：服務與課程定價說明
+model ServicePackage {
+  id          String         @id @default(uuid())
+  type        CommissionType
+  title       String
+  priceInfo   String
+  description String         @db.Text
+  isPublished Boolean        @default(true)
+  sortOrder   Int            @default(0)
+}
+
+model Order {
+  id              String        @id @default(uuid())
+  userEmail       String
+  totalAmount     Decimal       @db.Decimal(10, 2)
+  status          PaymentStatus @default(PENDING)
+  paymentMethod   String?
+  merchantTradeNo String        @unique
+  tradeNo         String?
+  userId          String?
+  user            User?         @relation(fields: [userId], references: [id])
+  orderItems      OrderItem[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model OrderItem {
+  id           String     @id @default(uuid())
+  orderId      String
+  order        Order      @relation(fields: [orderId], references: [id])
+  sheetMusicId String
+  sheetMusic   SheetMusic @relation(fields: [sheetMusicId], references: [id])
+  price        Decimal    @db.Decimal(10, 2)
+}
+
+model Commission {
+  id        String         @id @default(uuid())
+  type      CommissionType
+  name      String
+  email     String
+  phone     String?
+  audioUrl  String?
+  details   String         @db.Text
+  isHandled Boolean        @default(false)
+  createdAt DateTime       @default(now())
+}

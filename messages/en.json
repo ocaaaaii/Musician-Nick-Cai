@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "about": "About",
+    "sheets": "Sheet Music",
+    "lessons": "Lessons",
+    "commissions": "Commissions",
+    "cart": "Cart",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "switchLocale": "Language"
+  },
+  "hero": {
+    "kicker": "Pianist / Composer",
+    "location": "Taipei",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "title": "About"
+  },
+  "featuredVideos": {
+    "title": "Featured Performances"
+  },
+  "footer": {
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "email": "Email"
+  },
+  "audioPlayer": {
+    "play": "Play",
+    "pause": "Pause",
+    "close": "Close player"
+  }
+}

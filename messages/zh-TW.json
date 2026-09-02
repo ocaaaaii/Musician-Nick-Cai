@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "about": "關於我",
+    "sheets": "樂譜商城",
+    "lessons": "教學服務",
+    "commissions": "客製委託",
+    "cart": "購物車",
+    "openMenu": "開啟導覽選單",
+    "closeMenu": "關閉導覽選單",
+    "switchLocale": "語言"
+  },
+  "hero": {
+    "kicker": "鋼琴家 / 作曲家",
+    "location": "台北",
+    "scroll": "捲動"
+  },
+  "about": {
+    "title": "關於我"
+  },
+  "featuredVideos": {
+    "title": "精選演奏"
+  },
+  "footer": {
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "email": "Email"
+  },
+  "audioPlayer": {
+    "play": "播放",
+    "pause": "暫停",
+    "close": "關閉播放器"
+  }
+}
