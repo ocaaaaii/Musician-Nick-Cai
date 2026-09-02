@@ -6,15 +6,10 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getProfileConfig } from "@/lib/content/profile";
 import { getFeaturedVideos } from "@/lib/content/featured-videos";
 
-export default async function Home({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function Home() {
   const [profile, videos] = await Promise.all([
-    getProfileConfig(locale),
-    getFeaturedVideos(locale),
+    getProfileConfig(),
+    getFeaturedVideos(),
   ]);
 
   return (

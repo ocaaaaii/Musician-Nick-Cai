@@ -19,26 +19,17 @@ async function main() {
       heroTitle: "鋼琴家 Nick Cai",
       heroSubtitle: "編曲・採譜・鋼琴教學",
       aboutBio:
-        "以流行改編與即興編曲見長的鋼琴演奏家，擅長將原曲重新詮釋為適合演出與教學的鋼琴版本。",
-      styleTags: ["流行改編", "爵士即興", "J-POP Cover", "R&B"],
+        "以流行改編與即興編曲見長的鋼琴演奏家，擅長將原曲重新詮釋為適合演出與教學的鋼琴版本，同時提供客製化採譜與一對一教學服務。",
+      styleTags: ["流行改編", "爵士即興", "J-POP Cover", "R&B", "即興伴奏"],
       instagramUrl: "https://instagram.com/_ninimusic",
       youtubeUrl: "https://youtube.com/@nick858858",
       contactEmail: "nick969969@gmail.com",
     },
   });
 
-  const featuredVideo = await prisma.featuredVideo.findFirst({
-    where: { youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  });
-  if (!featuredVideo) {
-    await prisma.featuredVideo.create({
-      data: {
-        title: "示範演奏影片",
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        sortOrder: 0,
-      },
-    });
-  }
+  // No demo FeaturedVideo seeded - real videos are managed via
+  // /admin/profile (see openspec/changes/admin-profile). An empty list is
+  // a valid, intentional state: the homepage section just stays hidden.
 
   const sheetMusic = await prisma.sheetMusic.findFirst({
     where: { title: "示範樂譜" },

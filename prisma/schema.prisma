@@ -23,6 +23,11 @@ enum CommissionType {
   COLLABORATION // 合作邀約
 }
 
+enum VideoPlatform {
+  YOUTUBE
+  INSTAGRAM
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -48,14 +53,15 @@ model ProfileConfig {
   updatedAt    DateTime @updatedAt
 }
 
-/// 後台維護：精選影片管理
+/// 後台維護：精選影片管理（YouTube 連結或 Instagram Reels 連結）
 model FeaturedVideo {
-  id          String   @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
-  youtubeUrl  String
-  sortOrder   Int      @default(0)
-  isPublished Boolean  @default(true)
-  createdAt   DateTime @default(now())
+  videoUrl    String
+  platform    VideoPlatform @default(YOUTUBE)
+  sortOrder   Int           @default(0)
+  isPublished Boolean       @default(true)
+  createdAt   DateTime      @default(now())
 }
 
 /// 後台維護：樂譜商品管理

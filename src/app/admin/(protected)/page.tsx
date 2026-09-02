@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { logout } from "./actions";
 
 const modules = [
-  { href: "/admin/profile", label: "個人品牌與首頁" },
-  { href: "/admin/sheets", label: "樂譜商品管理" },
-  { href: "/admin/services", label: "服務與定價管理" },
-  { href: "/admin/orders", label: "訂單與收入統計" },
-  { href: "/admin/commissions", label: "委託與詢問看板" },
+  { href: "/admin/profile", label: "個人品牌與首頁", available: true },
+  { href: "/admin/sheets", label: "樂譜商品管理", available: true },
+  { href: "/admin/services", label: "服務與定價管理", available: true },
+  { href: "/admin/orders", label: "訂單與收入統計", available: true },
+  { href: "/admin/commissions", label: "委託與詢問看板", available: true },
 ];
 
 export default function AdminDashboardPage() {
@@ -32,14 +33,25 @@ export default function AdminDashboardPage() {
         </div>
 
         <ul className="mt-8 divide-y divide-ink/10">
-          {modules.map((m) => (
-            <li key={m.href} className="py-4 font-body text-sm text-ink/40">
-              {m.label}
-              <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/25">
-                即將推出
-              </span>
-            </li>
-          ))}
+          {modules.map((m) =>
+            m.available ? (
+              <li key={m.href}>
+                <Link
+                  href={m.href}
+                  className="block py-4 font-body text-sm text-ink transition-colors hover:text-brass"
+                >
+                  {m.label}
+                </Link>
+              </li>
+            ) : (
+              <li key={m.href} className="py-4 font-body text-sm text-ink/40">
+                {m.label}
+                <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/25">
+                  即將推出
+                </span>
+              </li>
+            )
+          )}
         </ul>
       </div>
     </main>
