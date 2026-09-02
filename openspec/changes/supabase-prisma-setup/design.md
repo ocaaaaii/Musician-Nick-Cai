@@ -47,6 +47,7 @@ Prisma migration 只負責資料表結構（schema shape）。RLS 政策（`ENAB
 - [風險] RLS 政策撰寫錯誤可能誤鎖合法存取或洩漏未發布內容 → 緩解：政策套用後，於本地/測試環境以「已登入 ADMIN」「一般使用者」「匿名」三種身分分別跑過 `database-access-control` spec 中列出的每個 Scenario 再上線
 - [風險] 伺服器端授權檢查若遺漏在某支 API Route，會因為 RLS 只是第二道防線而非主要防線，導致實際上未受保護 → 緩解：所有 `/admin/*` 與涉及非公開資料的 API Route 統一透過同一個 `requireAdmin()`／`requireAuth()` helper 呼叫，不允許個別 Route 自行兜授權邏輯
 - [風險] 連線池模式下 migration 失敗或行為不一致 → 緩解：嚴格區分 `DATABASE_URL`（執行期，池化）與 `DIRECT_URL`（僅 migration 使用直連）
+- [風險，套用時發現] PostgREST 的 `Prefer: return=representation`（插入後要求回傳該筆資料）在只有 INSERT policy、沒有搭配 SELECT policy 時會失敗（`42501`），即使 `WITH CHECK` 本身允許該筆寫入——因為 RETURNING 語意上還是要「讀回」剛寫入的那一列。實測：`SET LOCAL ROLE anon` 直接在 SQL 層 INSERT 成功，但同一份資料透過 Supabase REST API 用 anon key + `return=representation` 卻回傳 RLS 違規；改用 `return=minimal` 則正常 → 緩解：本專案的訪客寫入（委託表單、訂單建立）一律經由 Next.js Server Action／API Route 呼叫 Prisma（見 Decision 2，走特權連線，不受此限制），不透過瀏覽器端直接呼叫 Supabase REST/`supabase-js` 寫入，因此目前架構不會踩到這個限制；若未來真的要讓前端直接寫入 Supabase，需要額外設計「可讀回但範圍受限」的 SELECT policy，或應用端一律使用 `return=minimal`
 
 ## Migration Plan
 
@@ -54,8 +55,8 @@ Prisma migration 只負責資料表結構（schema shape）。RLS 政策（`ENAB
 2. 安裝 Prisma，依技術規格書建立 `prisma/schema.prisma`
 3. 執行 `prisma migrate dev --name init` 建立初始 migration 並套用到 Supabase
 4. 撰寫 `supabase/rls-policies.sql`，涵蓋 `database-access-control` spec 中所有 Requirement，於 Supabase SQL Editor 或 CLI 套用
-5. 撰寫 `prisma/seed.ts`，執行 `prisma db seed` 建立範例資料
-6. 手動以三種身分（ADMIN、一般/匿名、伺服器端服務角色）驗證 spec 中的每個 Scenario
+5. 撰寫 `prisma/seed.ts`，於 `prisma.config.ts` 的 `migrations.seed` 設定執行指令（Prisma 7 不再讀取 `package.json` 的 `prisma.seed` 欄位），執行 `prisma db seed` 建立範例資料
+6. 手動以三種身分（ADMIN、一般/匿名、伺服器端服務角色）驗證 spec 中的每個 Scenario——實務上「一般/匿名」以 Supabase REST API + anon key 測試，「伺服器端」以 `SET LOCAL ROLE` 或直接 Prisma 連線測試，兩者行為不同（見上方新增的 Risk）
 
 無需 rollback 策略之外的特殊安排：這是全新專案的第一批資料表，若 migration 有誤可直接刪除 Supabase 專案重建，不涉及既有生產資料。
 
