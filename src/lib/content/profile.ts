@@ -11,9 +11,9 @@ import type { ProfileConfig } from "@prisma/client";
 const base = {
   id: "site-config",
   heroVideoUrl: null,
-  instagramUrl: "https://instagram.com/example",
-  youtubeUrl: "https://youtube.com/@example",
-  contactEmail: "contact@example.com",
+  instagramUrl: "https://instagram.com/_ninimusic",
+  youtubeUrl: "https://youtube.com/@nick858858",
+  contactEmail: "nick969969@gmail.com",
   calendlyUrl: null,
   updatedAt: new Date(),
 } satisfies Partial<ProfileConfig>;
