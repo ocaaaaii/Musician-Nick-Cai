@@ -65,5 +65,28 @@
       "fieldRequired": "此欄位為必填",
       "fieldInvalidEmail": "請輸入有效的 Email 格式"
     }
+  },
+  "commissions": {
+    "title": "客製委託",
+    "transcriptionHeading": "採譜服務",
+    "transcriptionEmpty": "目前尚未提供採譜服務項目，歡迎透過下方表單詢問。",
+    "collaborationHeading": "合作邀約",
+    "collaborationEmpty": "目前尚未提供合作項目，歡迎透過下方表單詢問。",
+    "form": {
+      "type": "委託類型",
+      "typeTranscription": "採譜委託",
+      "typeCollaboration": "合作邀約",
+      "name": "姓名",
+      "email": "Email",
+      "phone": "電話（選填）",
+      "audioUrl": "參考音檔或 YouTube 連結（選填）",
+      "details": "委託內容說明",
+      "submit": "送出委託",
+      "submitting": "送出中…",
+      "success": "已收到你的委託，會盡快與你聯繫！",
+      "errorGeneric": "送出時發生問題，請稍後再試。",
+      "fieldRequired": "此欄位為必填",
+      "fieldInvalid": "請輸入有效的格式"
+    }
   }
 }

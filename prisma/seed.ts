@@ -81,10 +81,17 @@ async function main() {
     },
     {
       type: "COLLABORATION",
+      title: "鋼琴合作／伴奏邀約",
+      priceInfo: "依場次面議",
+      description: "現場演出、樂團合作、歌手/樂器伴奏等鋼琴合作邀約，依場地與演出長度彈性報價。",
+      sortOrder: 2,
+    },
+    {
+      type: "COLLABORATION",
       title: "商業合作邀約",
       priceInfo: "面議",
       description: "商演、錄音室合作、品牌合作洽談。",
-      sortOrder: 2,
+      sortOrder: 3,
     },
   ];
   for (const pkg of servicePackages) {

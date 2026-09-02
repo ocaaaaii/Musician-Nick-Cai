@@ -65,5 +65,28 @@
       "fieldRequired": "この項目は必須です",
       "fieldInvalidEmail": "有効なEmailアドレスを入力してください"
     }
+  },
+  "commissions": {
+    "title": "依頼",
+    "transcriptionHeading": "採譜依頼",
+    "transcriptionEmpty": "現在採譜サービスは準備中です。下記フォームからお気軽にお問い合わせください。",
+    "collaborationHeading": "コラボレーション",
+    "collaborationEmpty": "現在コラボレーション案件は準備中です。下記フォームからお気軽にお問い合わせください。",
+    "form": {
+      "type": "依頼の種類",
+      "typeTranscription": "採譜依頼",
+      "typeCollaboration": "コラボレーションの相談",
+      "name": "お名前",
+      "email": "Email",
+      "phone": "電話番号（任意）",
+      "audioUrl": "参考音源またはYouTubeリンク（任意）",
+      "details": "依頼内容の詳細",
+      "submit": "依頼を送信する",
+      "submitting": "送信中…",
+      "success": "依頼を受け付けました。近日中にご連絡いたします。",
+      "errorGeneric": "送信中に問題が発生しました。しばらくしてから再度お試しください。",
+      "fieldRequired": "この項目は必須です",
+      "fieldInvalid": "有効な形式で入力してください"
+    }
   }
 }

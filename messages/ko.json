@@ -65,5 +65,28 @@
       "fieldRequired": "필수 입력 항목입니다",
       "fieldInvalidEmail": "올바른 이메일 형식을 입력해 주세요"
     }
+  },
+  "commissions": {
+    "title": "의뢰",
+    "transcriptionHeading": "채보 의뢰",
+    "transcriptionEmpty": "현재 준비된 채보 서비스가 없습니다. 아래 양식으로 편하게 문의해 주세요.",
+    "collaborationHeading": "협업 제안",
+    "collaborationEmpty": "현재 준비된 협업 항목이 없습니다. 아래 양식으로 편하게 문의해 주세요.",
+    "form": {
+      "type": "의뢰 유형",
+      "typeTranscription": "채보 의뢰",
+      "typeCollaboration": "협업 제안",
+      "name": "이름",
+      "email": "Email",
+      "phone": "전화번호 (선택)",
+      "audioUrl": "참고 음원 또는 YouTube 링크 (선택)",
+      "details": "의뢰 내용 설명",
+      "submit": "의뢰 보내기",
+      "submitting": "전송 중…",
+      "success": "의뢰가 접수되었습니다. 곧 연락드리겠습니다!",
+      "errorGeneric": "전송 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+      "fieldRequired": "필수 입력 항목입니다",
+      "fieldInvalid": "올바른 형식으로 입력해 주세요"
+    }
   }
 }

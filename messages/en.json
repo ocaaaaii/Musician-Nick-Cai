@@ -65,5 +65,28 @@
       "fieldRequired": "This field is required",
       "fieldInvalidEmail": "Please enter a valid email address"
     }
+  },
+  "commissions": {
+    "title": "Commissions",
+    "transcriptionHeading": "Transcription",
+    "transcriptionEmpty": "No transcription packages are available yet — feel free to reach out with the form below.",
+    "collaborationHeading": "Collaboration",
+    "collaborationEmpty": "No collaboration packages are available yet — feel free to reach out with the form below.",
+    "form": {
+      "type": "Request type",
+      "typeTranscription": "Transcription request",
+      "typeCollaboration": "Collaboration inquiry",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "audioUrl": "Reference audio or YouTube link (optional)",
+      "details": "Describe your request",
+      "submit": "Send request",
+      "submitting": "Sending…",
+      "success": "Your request has been received — we'll be in touch soon!",
+      "errorGeneric": "Something went wrong. Please try again later.",
+      "fieldRequired": "This field is required",
+      "fieldInvalid": "Please enter a valid value"
+    }
   }
 }
