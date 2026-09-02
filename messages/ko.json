@@ -29,5 +29,25 @@
     "play": "재생",
     "pause": "일시정지",
     "close": "플레이어 닫기"
+  },
+  "sheets": {
+    "title": "악보 스토어",
+    "searchPlaceholder": "곡명으로 검색…",
+    "filterDifficulty": "난이도",
+    "filterGenre": "장르",
+    "allDifficulties": "모든 난이도",
+    "allGenres": "모든 장르",
+    "empty": "조건에 맞는 악보가 없습니다",
+    "difficultyLabel": "난이도",
+    "genreLabel": "장르",
+    "keyLabel": "조성",
+    "listen": "미리듣기",
+    "addToCart": "장바구니에 담기",
+    "comingSoon": "장바구니 기능은 준비 중입니다"
+  },
+  "notFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "body": "찾으시는 내용이 존재하지 않거나 더 이상 제공되지 않습니다.",
+    "backHome": "홈으로 돌아가기"
   }
 }

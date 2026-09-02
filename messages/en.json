@@ -29,5 +29,25 @@
     "play": "Play",
     "pause": "Pause",
     "close": "Close player"
+  },
+  "sheets": {
+    "title": "Sheet Music",
+    "searchPlaceholder": "Search by title…",
+    "filterDifficulty": "Difficulty",
+    "filterGenre": "Genre",
+    "allDifficulties": "All difficulties",
+    "allGenres": "All genres",
+    "empty": "No sheet music matches these filters",
+    "difficultyLabel": "Difficulty",
+    "genreLabel": "Genre",
+    "keyLabel": "Key",
+    "listen": "Listen",
+    "addToCart": "Add to Cart",
+    "comingSoon": "Cart coming soon"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "What you're looking for doesn't exist, or is no longer available.",
+    "backHome": "Back to home"
   }
 }

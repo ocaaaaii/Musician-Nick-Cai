@@ -29,5 +29,25 @@
     "play": "播放",
     "pause": "暫停",
     "close": "關閉播放器"
+  },
+  "sheets": {
+    "title": "樂譜商城",
+    "searchPlaceholder": "搜尋曲名…",
+    "filterDifficulty": "難易度",
+    "filterGenre": "曲風",
+    "allDifficulties": "全部難易度",
+    "allGenres": "全部曲風",
+    "empty": "沒有符合條件的樂譜",
+    "difficultyLabel": "難易度",
+    "genreLabel": "曲風",
+    "keyLabel": "調性",
+    "listen": "試聽",
+    "addToCart": "加入購物車",
+    "comingSoon": "購物車功能開發中"
+  },
+  "notFound": {
+    "title": "找不到這個頁面",
+    "body": "你要找的內容不存在，或已經下架。",
+    "backHome": "回首頁"
   }
 }

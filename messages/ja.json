@@ -29,5 +29,25 @@
     "play": "再生",
     "pause": "一時停止",
     "close": "プレイヤーを閉じる"
+  },
+  "sheets": {
+    "title": "楽譜ストア",
+    "searchPlaceholder": "曲名で検索…",
+    "filterDifficulty": "難易度",
+    "filterGenre": "ジャンル",
+    "allDifficulties": "すべての難易度",
+    "allGenres": "すべてのジャンル",
+    "empty": "条件に一致する楽譜がありません",
+    "difficultyLabel": "難易度",
+    "genreLabel": "ジャンル",
+    "keyLabel": "調性",
+    "listen": "試聴",
+    "addToCart": "カートに追加",
+    "comingSoon": "カート機能は準備中です"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "body": "お探しの内容は存在しないか、削除された可能性があります。",
+    "backHome": "ホームに戻る"
   }
 }
