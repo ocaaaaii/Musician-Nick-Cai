@@ -1,32 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { randomBytes } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { buildEcpayFormFields } from "@/lib/ecpay";
+import {
+  refererLocaleBase,
+  generateMerchantTradeNo,
+} from "@/lib/checkout-helpers";
 import {
   validateCheckoutInput,
   type CheckoutPaymentMethod,
 } from "@/lib/validation/checkout";
-
-function refererLocaleBase(request: NextRequest): string {
-  const referer = request.headers.get("referer");
-  if (!referer) return "";
-  try {
-    const path = new URL(referer).pathname;
-    const match = path.match(/^\/(en|ja|ko)(\/|$)/);
-    return match ? `/${match[1]}` : "";
-  } catch {
-    return "";
-  }
-}
-
-function generateMerchantTradeNo(): string {
-  // ECPay requires alphanumeric, <=20 chars. Base36 timestamp + short
-  // random suffix keeps this well under the limit while staying unique.
-  return `${Date.now().toString(36)}${randomBytes(3).toString("hex")}`.slice(
-    0,
-    20
-  );
-}
 
 // Auto-submitting form per design.md Decision 1 - ECPay requires the
 // signed params to arrive as a POST body, which a plain redirect can't do.
@@ -82,6 +64,7 @@ export async function POST(request: NextRequest) {
       userEmail: email.trim(),
       totalAmount,
       status: "PENDING",
+      provider: "ECPAY",
       merchantTradeNo,
       orderItems: {
         create: { sheetMusicId: sheet.id, price: sheet.price },

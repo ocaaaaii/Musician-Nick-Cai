@@ -50,8 +50,11 @@
     "credit": "クレジットカード",
     "webatm": "WebATM",
     "cvs": "コンビニ決済",
-    "submit": "支払いへ進む",
-    "formError": "Email の形式と支払い方法をご確認ください"
+    "submit": "綠界（ECPay）で支払う（台湾）",
+    "submitStripe": "Stripe で支払う（海外／Apple Pay／Google Pay）",
+    "formError": "Email の形式と支払い方法をご確認ください",
+    "successTitle": "ご購入ありがとうございます",
+    "successBody": "お支払いの確認後、ダウンロードリンクをメールでお送りします。"
   },
   "notFound": {
     "title": "ページが見つかりません",

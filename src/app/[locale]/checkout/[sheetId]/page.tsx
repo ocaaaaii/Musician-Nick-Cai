@@ -79,12 +79,22 @@ export default async function CheckoutPage({
           </div>
         </fieldset>
 
-        <button
-          type="submit"
-          className="inline-flex items-center gap-2 bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-cream transition-colors hover:bg-brass"
-        >
-          {t("submit")}
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button
+            type="submit"
+            formAction="/api/payment/ecpay-checkout"
+            className="inline-flex items-center justify-center gap-2 bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-cream transition-colors hover:bg-brass"
+          >
+            {t("submit")}
+          </button>
+          <button
+            type="submit"
+            formAction="/api/payment/stripe-checkout"
+            className="inline-flex items-center justify-center gap-2 border border-ink/30 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-ink transition-colors hover:border-brass hover:text-brass"
+          >
+            {t("submitStripe")}
+          </button>
+        </div>
       </form>
     </main>
   );

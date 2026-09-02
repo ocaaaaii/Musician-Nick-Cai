@@ -50,8 +50,11 @@
     "credit": "신용카드",
     "webatm": "WebATM",
     "cvs": "편의점 코드결제",
-    "submit": "결제하기",
-    "formError": "이메일 형식과 결제 방법을 확인해 주세요"
+    "submit": "ECPay로 결제 (대만)",
+    "submitStripe": "Stripe로 결제 (해외 / Apple Pay / Google Pay)",
+    "formError": "이메일 형식과 결제 방법을 확인해 주세요",
+    "successTitle": "구매해 주셔서 감사합니다",
+    "successBody": "결제가 확인되면 다운로드 링크를 이메일로 보내드립니다."
   },
   "notFound": {
     "title": "페이지를 찾을 수 없습니다",

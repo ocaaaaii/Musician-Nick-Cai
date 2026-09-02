@@ -28,6 +28,11 @@ enum VideoPlatform {
   INSTAGRAM
 }
 
+enum PaymentProvider {
+  ECPAY
+  STRIPE
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -94,18 +99,19 @@ model ServicePackage {
 }
 
 model Order {
-  id              String        @id @default(uuid())
+  id              String          @id @default(uuid())
   userEmail       String
-  totalAmount     Decimal       @db.Decimal(10, 2)
-  status          PaymentStatus @default(PENDING)
+  totalAmount     Decimal         @db.Decimal(10, 2)
+  status          PaymentStatus   @default(PENDING)
+  provider        PaymentProvider @default(ECPAY)
   paymentMethod   String?
-  merchantTradeNo String        @unique
+  merchantTradeNo String          @unique
   tradeNo         String?
   userId          String?
-  user            User?         @relation(fields: [userId], references: [id])
+  user            User?           @relation(fields: [userId], references: [id])
   orderItems      OrderItem[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model OrderItem {

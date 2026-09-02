@@ -50,8 +50,11 @@
     "credit": "Credit Card",
     "webatm": "WebATM",
     "cvs": "Convenience Store Code",
-    "submit": "Proceed to Payment",
-    "formError": "Please check your email format and select a payment method"
+    "submit": "Pay with ECPay (Taiwan)",
+    "submitStripe": "Pay with Stripe (International / Apple Pay / Google Pay)",
+    "formError": "Please check your email format and select a payment method",
+    "successTitle": "Thank you for your purchase",
+    "successBody": "Once your payment is confirmed, the download link will be emailed to you shortly."
   },
   "notFound": {
     "title": "Page not found",

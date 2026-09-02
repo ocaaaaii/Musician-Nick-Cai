@@ -50,8 +50,11 @@
     "credit": "信用卡",
     "webatm": "WebATM",
     "cvs": "超商代碼",
-    "submit": "前往付款",
-    "formError": "請確認 Email 格式正確並選擇付款方式"
+    "submit": "綠界結帳（台灣）",
+    "submitStripe": "Stripe 結帳（國際／Apple Pay／Google Pay）",
+    "formError": "請確認 Email 格式正確並選擇付款方式",
+    "successTitle": "感謝您的購買",
+    "successBody": "付款確認後，下載連結會寄到您的信箱，請稍候查收。"
   },
   "notFound": {
     "title": "找不到這個頁面",
