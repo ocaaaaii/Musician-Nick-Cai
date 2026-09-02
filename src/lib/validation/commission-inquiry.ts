@@ -7,6 +7,8 @@ export type CommissionInquiryInput = {
   phone?: string;
   audioUrl?: string;
   details: string;
+  honeypot: string;
+  formLoadedAt: number;
 };
 
 export type CommissionInquiryFieldErrors = Partial<

@@ -11,18 +11,24 @@ import { submitCommissionInquiry } from "@/app/[locale]/commissions/actions";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const EMPTY_INPUT: CommissionInquiryInput = {
+const EMPTY_INPUT: Omit<CommissionInquiryInput, "formLoadedAt"> = {
   type: "TRANSCRIPTION",
   name: "",
   email: "",
   phone: "",
   audioUrl: "",
   details: "",
+  honeypot: "",
 };
 
 export function CommissionInquiryForm() {
   const t = useTranslations("commissions.form");
-  const [input, setInput] = useState<CommissionInquiryInput>(EMPTY_INPUT);
+  // Lazy initializer so formLoadedAt is captured at mount time, not at
+  // module evaluation - see design.md, Decision 1.
+  const [input, setInput] = useState<CommissionInquiryInput>(() => ({
+    ...EMPTY_INPUT,
+    formLoadedAt: Date.now(),
+  }));
   const [fieldErrors, setFieldErrors] = useState<CommissionInquiryFieldErrors>(
     {}
   );
@@ -56,6 +62,24 @@ export function CommissionInquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Honeypot - real users never see this field; bots that auto-fill
+          every input tend to fill it. Not display:none, since some bots
+          skip those. See design.md, Decision 1. */}
+      <div className="absolute -left-[9999px]" aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={input.honeypot}
+          onChange={(e) =>
+            setInput((prev) => ({ ...prev, honeypot: e.target.value }))
+          }
+        />
+      </div>
+
       <div>
         <label className="block font-mono text-xs uppercase tracking-[0.1em] text-ink/60">
           {t("type")}

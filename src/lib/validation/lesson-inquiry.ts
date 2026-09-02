@@ -3,6 +3,8 @@ export type LessonInquiryInput = {
   email: string;
   phone?: string;
   details: string;
+  honeypot: string;
+  formLoadedAt: number;
 };
 
 export type LessonInquiryFieldErrors = Partial<

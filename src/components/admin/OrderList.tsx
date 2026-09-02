@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { resendDownloadEmail } from "@/app/admin/(protected)/orders/actions";
+
 type OrderRow = {
   id: string;
   userEmail: string;
@@ -42,6 +47,20 @@ export function OrderList({
   totalRevenue: number;
   statusCounts: Record<OrderRow["status"], number>;
 }) {
+  const [resending, setResending] = useState<string | null>(null);
+  const [rowMessage, setRowMessage] = useState<Record<string, string>>({});
+
+  async function handleResend(orderId: string) {
+    setResending(orderId);
+    setRowMessage((m) => ({ ...m, [orderId]: "" }));
+    const result = await resendDownloadEmail(orderId);
+    setRowMessage((m) => ({
+      ...m,
+      [orderId]: result.ok ? "已重新寄出" : "重發失敗，請稍後再試",
+    }));
+    setResending(null);
+  }
+
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -75,8 +94,23 @@ export function OrderList({
                 >
                   {STATUS_LABELS[order.status]}
                 </p>
+                {order.status === "SUCCESS" && (
+                  <button
+                    type="button"
+                    onClick={() => handleResend(order.id)}
+                    disabled={resending === order.id}
+                    className="mt-2 border border-ink/30 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink transition-colors hover:border-brass hover:text-brass disabled:opacity-50"
+                  >
+                    {resending === order.id ? "寄送中…" : "重發下載信"}
+                  </button>
+                )}
               </div>
             </div>
+            {rowMessage[order.id] && (
+              <p className="mt-2 text-right font-mono text-[11px] text-ink/50">
+                {rowMessage[order.id]}
+              </p>
+            )}
           </li>
         ))}
         {orders.length === 0 && (

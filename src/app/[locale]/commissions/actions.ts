@@ -5,6 +5,7 @@ import {
   validateCommissionInquiry,
   type CommissionInquiryInput,
 } from "@/lib/validation/commission-inquiry";
+import { isLikelyBot } from "@/lib/validation/anti-spam";
 
 export type SubmitCommissionInquiryResult =
   | { ok: true }
@@ -16,6 +17,12 @@ export async function submitCommissionInquiry(
   const fieldErrors = validateCommissionInquiry(input);
   if (Object.keys(fieldErrors).length > 0) {
     return { ok: false, fieldErrors };
+  }
+
+  // Looks successful to the caller either way - see
+  // openspec/changes/inquiry-spam-protection/design.md, Decision 2.
+  if (isLikelyBot(input)) {
+    return { ok: true };
   }
 
   try {
