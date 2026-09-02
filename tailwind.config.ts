@@ -9,6 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        bone: "#F5F1E8",
+        khaki: "#E3DCC9",
         paper: "#C4BFBA",
         ink: "#1C1D1F",
         taupe: "#6F6865",

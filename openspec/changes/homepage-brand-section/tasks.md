@@ -37,4 +37,12 @@
 
 - [x] 6.1 執行 `npm run lint` 與 `npx tsc --noEmit`，確認無錯誤
 - [x] 6.2 於瀏覽器截圖桌面版與行動版首頁，對照 design.md 修正後的視覺方向（低飽和中性色、原色照片、細字級距標籤）與使用者第二批參考圖逐項自我檢查；hover 狀態（導覽底線、風格標籤填色）以截圖驗證
+
+## 7. 後續修正（其他 change 開發期間發現／使用者追加要求）
+
+- [x] 7.1 修正 `Header.tsx` 的「關於我」導覽連結：原本連到不存在的 `/about` 頁面（規格書裡「關於我」本來就只是首頁的一個區塊，從未規劃獨立頁面），改為錨點連結 `/#about`；`About.tsx` 加上 `id="about"` 與 `scroll-mt-20`（避開 sticky header）
+- [x] 7.2 修正同頁錨點導覽不會捲動的問題：Next.js 的 `Link` 在「同一頁、只有 hash 不同」時不會觸發原生 `hashchange`，也不會執行 Next 自己的捲動邏輯，且其預設 `scroll` 行為會與手動捲動打架；改為只在「目標路徑等於目前路徑」時才 `preventDefault()`＋手動 `scrollIntoView()`＋`scroll={false}`，跨頁導覽（例如從 `/sheets` 點「關於我」）則維持 Next 預設行為（本來就正常）。全站加上 `scroll-behavior: smooth`（含 `prefers-reduced-motion` 例外）
+- [x] 7.3 `globals.css` 加入 `html { scroll-behavior: smooth }`，讓錨點捲動有平滑過渡，非瞬間跳轉
+- [x] 7.4 使用者要求調整 `About.tsx` 風格標籤內容：「動漫 OST」→「J-POP Cover」、「電影配樂」→「R&B」（四語系 `src/lib/content/profile.ts` 與 `prisma/seed.ts` 皆同步更新）
+- [x] 7.5 使用者要求 `FeaturedVideos.tsx` 卡片改為直式（IG reel 風格）：`aspect-video`（16:9）改為 `aspect-[3/4]`
 - [x] 6.3 確認 proposal.md 的 Impact 段落所列檔案皆已建立或修改完成

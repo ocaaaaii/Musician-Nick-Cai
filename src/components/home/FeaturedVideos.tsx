@@ -3,6 +3,7 @@ import { Play } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FeaturedVideo } from "@prisma/client";
 import { getYoutubeThumbnail } from "@/lib/youtube";
+import { FadeDivider } from "@/components/ui/FadeDivider";
 
 export function FeaturedVideos({ videos }: { videos: FeaturedVideo[] }) {
   const t = useTranslations("featuredVideos");
@@ -11,7 +12,9 @@ export function FeaturedVideos({ videos }: { videos: FeaturedVideo[] }) {
   const sorted = [...videos].sort((a, b) => a.sortOrder - b.sortOrder);
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+    <div className="bg-khaki">
+      <FadeDivider />
+      <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
       <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
         {t("title")}
       </h2>
@@ -26,7 +29,7 @@ export function FeaturedVideos({ videos }: { videos: FeaturedVideo[] }) {
               rel="noopener noreferrer"
               className="group block"
             >
-              <div className="relative aspect-video overflow-hidden border border-ink/10 bg-taupe/20">
+              <div className="relative aspect-[3/4] overflow-hidden border border-ink/10 bg-taupe/20">
                 {thumbnail && (
                   <Image
                     src={thumbnail}
@@ -53,6 +56,7 @@ export function FeaturedVideos({ videos }: { videos: FeaturedVideo[] }) {
           );
         })}
       </div>
-    </section>
+      </section>
+    </div>
   );
 }

@@ -40,10 +40,11 @@ export function Hero({ profile }: { profile: ProfileConfig }) {
   }, []);
 
   return (
-    <section
-      ref={rootRef}
-      className="relative mx-auto max-w-6xl px-6 pb-16 pt-16 sm:pt-24"
-    >
+    <div className="bg-paper">
+      <section
+        ref={rootRef}
+        className="relative mx-auto max-w-6xl px-6 pb-16 pt-16 sm:pt-24"
+      >
       <div
         data-reveal="kicker"
         className="mb-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50"
@@ -89,6 +90,7 @@ export function Hero({ profile }: { profile: ProfileConfig }) {
         <span>{t("scroll")}</span>
         <span aria-hidden>↓</span>
       </div>
-    </section>
+      </section>
+    </div>
   );
 }

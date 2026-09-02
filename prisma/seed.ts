@@ -20,7 +20,7 @@ async function main() {
       heroSubtitle: "編曲・採譜・鋼琴教學",
       aboutBio:
         "以流行改編與即興編曲見長的鋼琴演奏家，擅長將原曲重新詮釋為適合演出與教學的鋼琴版本。",
-      styleTags: ["流行改編", "爵士即興", "動漫 OST"],
+      styleTags: ["流行改編", "爵士即興", "J-POP Cover", "R&B"],
       instagramUrl: "https://instagram.com/example",
       contactEmail: "contact@example.com",
     },

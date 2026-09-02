@@ -5,7 +5,7 @@ export function SheetMusicCard({ sheet }: { sheet: SerializedSheetMusic }) {
   return (
     <Link
       href={`/sheets/${sheet.id}`}
-      className="group block border border-ink/10 p-5 transition-colors hover:border-brass"
+      className="group block border border-ink/5 bg-bone p-5 shadow-[0_1px_3px_rgba(28,29,31,0.08)] transition-colors hover:border-brass"
     >
       <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink/50">
         {sheet.genre}

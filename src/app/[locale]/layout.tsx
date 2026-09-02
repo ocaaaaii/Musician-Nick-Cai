@@ -48,6 +48,7 @@ export default async function LocaleLayout({
       <body
         className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} antialiased`}
       >
+        <div className="noise-overlay" />
         <NextIntlClientProvider>
           <Header />
           {children}

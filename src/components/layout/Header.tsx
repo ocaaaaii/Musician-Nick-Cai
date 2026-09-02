@@ -7,6 +7,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { localeNames } from "@/i18n/locale-names";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
+import { FadeDivider } from "@/components/ui/FadeDivider";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,11 +18,41 @@ export function Header() {
   const pathname = usePathname();
 
   const navLinks = [
-    { href: "/about", label: t("about") },
+    { href: "/#about", label: t("about") },
     { href: "/sheets", label: t("sheets") },
     { href: "/lessons", label: t("lessons") },
     { href: "/commissions", label: t("commissions") },
   ] as const;
+
+  // A hash link to a section on the *current* page (e.g. clicking "/#about"
+  // while already on "/") doesn't trigger a real route change, so Next's
+  // own scroll-to-hash handling never runs and its default scroll-restore
+  // behavior fights any manual scroll we attempt. Cross-page hash links
+  // (e.g. clicking it from /sheets) go through an actual navigation, where
+  // Next's default `scroll` behavior already lands correctly on its own -
+  // so only the same-page case needs `scroll={false}` + manual handling.
+  const isSamePageHash = (href: string) => {
+    const hashIndex = href.indexOf("#");
+    if (hashIndex === -1) return false;
+    const targetPath = href.slice(0, hashIndex) || "/";
+    return pathname === targetPath;
+  };
+
+  const handleHashNav = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    const hashIndex = href.indexOf("#");
+    if (hashIndex === -1 || !isSamePageHash(href)) return;
+
+    const targetId = href.slice(hashIndex + 1);
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.pushState(null, "", `${pathname}#${targetId}`);
+  };
 
   useEffect(() => {
     if (!langOpen) return;
@@ -35,7 +66,8 @@ export function Header() {
   }, [langOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/90 backdrop-blur">
+    <header className="sticky top-0 z-40 bg-bone/90 backdrop-blur">
+      <FadeDivider className="absolute bottom-0" />
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="font-display text-lg font-semibold text-ink">
           Nick Cai
@@ -46,6 +78,8 @@ export function Header() {
             <UnderlineLink
               key={link.href}
               href={link.href}
+              scroll={!isSamePageHash(link.href)}
+              onClick={(e) => handleHashNav(e, link.href)}
               className="font-mono text-xs uppercase tracking-[0.12em] text-ink/80 transition-colors hover:text-ink"
             >
               {link.label}
@@ -69,7 +103,7 @@ export function Header() {
               />
             </button>
             {langOpen && (
-              <div className="absolute right-0 top-full mt-2 min-w-28 border border-ink/10 bg-paper py-1 shadow-sm">
+              <div className="absolute right-0 top-full mt-2 min-w-28 border border-ink/5 bg-bone py-1 shadow-[0_2px_8px_rgba(28,29,31,0.1)]">
                 {routing.locales.map((loc) => (
                   <Link
                     key={loc}
@@ -115,8 +149,12 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
+              scroll={!isSamePageHash(link.href)}
               className="py-2 font-mono text-xs uppercase tracking-[0.12em] text-ink/80 transition-colors hover:text-brass"
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => {
+                setMenuOpen(false);
+                handleHashNav(e, link.href);
+              }}
             >
               {link.label}
             </Link>
