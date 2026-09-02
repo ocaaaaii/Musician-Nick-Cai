@@ -1,8 +1,8 @@
 import { AtSign, Mail, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { ProfileConfig } from "@prisma/client";
+import type { ResolvedProfileConfig } from "@/lib/content/profile";
 
-export function SocialFooter({ profile }: { profile: ProfileConfig }) {
+export function SocialFooter({ profile }: { profile: ResolvedProfileConfig }) {
   const t = useTranslations("footer");
 
   return (

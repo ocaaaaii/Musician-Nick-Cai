@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
-import type { ProfileConfig } from "@prisma/client";
+import type { ResolvedProfileConfig } from "@/lib/content/profile";
 import { FadeDivider } from "@/components/ui/FadeDivider";
 
-export function About({ profile }: { profile: ProfileConfig }) {
+export function About({ profile }: { profile: ResolvedProfileConfig }) {
   const t = useTranslations("about");
   return (
     <div id="about" className="scroll-mt-20 bg-bone">

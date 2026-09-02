@@ -1,8 +1,57 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import type { ProfileConfig } from "@prisma/client";
 import { updateProfile } from "@/app/admin/(protected)/profile/actions";
+
+const LOCALES = ["zh-TW", "en", "ja", "ko"] as const;
+type Locale = (typeof LOCALES)[number];
+
+const LOCALE_LABELS: Record<Locale, string> = {
+  "zh-TW": "中文",
+  en: "EN",
+  ja: "日本語",
+  ko: "한국어",
+};
+
+type LocalizedFields = {
+  heroTitle: string;
+  heroSubtitle: string;
+  aboutBio: string;
+  styleTags: string[];
+};
+
+// Prisma's Json columns come across the Server -> Client boundary as loosely
+// typed values - this narrows them into the per-locale shape the form
+// edits, defaulting missing locales to empty so every tab always renders.
+type IncomingProfile = {
+  heroTitle: unknown;
+  heroSubtitle: unknown;
+  aboutBio: unknown;
+  styleTags: unknown;
+  instagramUrl: string | null;
+  youtubeUrl: string | null;
+  contactEmail: string | null;
+  calendlyUrl: string | null;
+};
+
+function toLocalizedRecord(profile: IncomingProfile): Record<Locale, LocalizedFields> {
+  const heroTitle = (profile.heroTitle ?? {}) as Record<string, string>;
+  const heroSubtitle = (profile.heroSubtitle ?? {}) as Record<string, string>;
+  const aboutBio = (profile.aboutBio ?? {}) as Record<string, string>;
+  const styleTags = (profile.styleTags ?? {}) as Record<string, string[]>;
+
+  return Object.fromEntries(
+    LOCALES.map((locale) => [
+      locale,
+      {
+        heroTitle: heroTitle[locale] ?? "",
+        heroSubtitle: heroSubtitle[locale] ?? "",
+        aboutBio: aboutBio[locale] ?? "",
+        styleTags: styleTags[locale] ?? [],
+      },
+    ])
+  ) as Record<Locale, LocalizedFields>;
+}
 
 const FIELD_LABELS: Record<string, string> = {
   heroTitle: "Hero 標題",
@@ -18,12 +67,11 @@ function labelField(field: string) {
   return FIELD_LABELS[field] ?? field;
 }
 
-export function ProfileForm({ profile }: { profile: ProfileConfig }) {
-  const [heroTitle, setHeroTitle] = useState(profile.heroTitle);
-  const [heroSubtitle, setHeroSubtitle] = useState(profile.heroSubtitle);
-  const [aboutBio, setAboutBio] = useState(profile.aboutBio);
-  const [styleTags, setStyleTags] = useState<string[]>(profile.styleTags);
+export function ProfileForm({ profile }: { profile: IncomingProfile }) {
+  const [activeLocale, setActiveLocale] = useState<Locale>("zh-TW");
+  const [localized, setLocalized] = useState(() => toLocalizedRecord(profile));
   const [newTag, setNewTag] = useState("");
+
   const [instagramUrl, setInstagramUrl] = useState(profile.instagramUrl ?? "");
   const [youtubeUrl, setYoutubeUrl] = useState(profile.youtubeUrl ?? "");
   const [contactEmail, setContactEmail] = useState(profile.contactEmail ?? "");
@@ -34,15 +82,26 @@ export function ProfileForm({ profile }: { profile: ProfileConfig }) {
     "idle"
   );
 
+  const current = localized[activeLocale];
+
+  function updateCurrentLocale(patch: Partial<LocalizedFields>) {
+    setLocalized((prev) => ({
+      ...prev,
+      [activeLocale]: { ...prev[activeLocale], ...patch },
+    }));
+  }
+
   function addTag() {
     const value = newTag.trim();
-    if (!value || styleTags.includes(value)) return;
-    setStyleTags([...styleTags, value]);
+    if (!value || current.styleTags.includes(value)) return;
+    updateCurrentLocale({ styleTags: [...current.styleTags, value] });
     setNewTag("");
   }
 
   function removeTag(tag: string) {
-    setStyleTags(styleTags.filter((t) => t !== tag));
+    updateCurrentLocale({
+      styleTags: current.styleTags.filter((t) => t !== tag),
+    });
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -51,10 +110,10 @@ export function ProfileForm({ profile }: { profile: ProfileConfig }) {
     setFieldErrors({});
 
     const result = await updateProfile({
-      heroTitle,
-      heroSubtitle,
-      aboutBio,
-      styleTags,
+      heroTitle: mapLocales((l) => localized[l].heroTitle),
+      heroSubtitle: mapLocales((l) => localized[l].heroSubtitle),
+      aboutBio: mapLocales((l) => localized[l].aboutBio),
+      styleTags: mapLocales((l) => localized[l].styleTags),
       instagramUrl,
       youtubeUrl,
       contactEmail,
@@ -71,29 +130,56 @@ export function ProfileForm({ profile }: { profile: ProfileConfig }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {(["heroTitle", "heroSubtitle"] as const).map((field) => (
-        <Field
-          key={field}
-          label={labelField(field)}
-          error={fieldErrors[field]}
-        >
-          <input
-            type="text"
-            value={field === "heroTitle" ? heroTitle : heroSubtitle}
-            onChange={(e) =>
-              field === "heroTitle"
-                ? setHeroTitle(e.target.value)
-                : setHeroSubtitle(e.target.value)
-            }
-            className="mt-1.5 w-full border border-ink/20 bg-transparent px-3 py-2 font-body text-sm text-ink focus:border-brass focus:outline-none"
-          />
-        </Field>
-      ))}
+      <div className="flex gap-1 border-b border-ink/15">
+        {LOCALES.map((locale) => (
+          <button
+            key={locale}
+            type="button"
+            onClick={() => setActiveLocale(locale)}
+            className={`px-3 py-2 font-mono text-xs uppercase tracking-[0.1em] transition-colors ${
+              activeLocale === locale
+                ? "border-b-2 border-brass text-ink"
+                : "text-ink/40 hover:text-ink"
+            }`}
+          >
+            {LOCALE_LABELS[locale]}
+          </button>
+        ))}
+      </div>
 
-      <Field label={labelField("aboutBio")} error={fieldErrors.aboutBio}>
+      <Field
+        label={labelField("heroTitle")}
+        error={activeLocale === "zh-TW" ? fieldErrors.heroTitle : undefined}
+      >
+        <input
+          type="text"
+          value={current.heroTitle}
+          onChange={(e) => updateCurrentLocale({ heroTitle: e.target.value })}
+          className="mt-1.5 w-full border border-ink/20 bg-transparent px-3 py-2 font-body text-sm text-ink focus:border-brass focus:outline-none"
+        />
+      </Field>
+
+      <Field
+        label={labelField("heroSubtitle")}
+        error={activeLocale === "zh-TW" ? fieldErrors.heroSubtitle : undefined}
+      >
+        <input
+          type="text"
+          value={current.heroSubtitle}
+          onChange={(e) =>
+            updateCurrentLocale({ heroSubtitle: e.target.value })
+          }
+          className="mt-1.5 w-full border border-ink/20 bg-transparent px-3 py-2 font-body text-sm text-ink focus:border-brass focus:outline-none"
+        />
+      </Field>
+
+      <Field
+        label={labelField("aboutBio")}
+        error={activeLocale === "zh-TW" ? fieldErrors.aboutBio : undefined}
+      >
         <textarea
-          value={aboutBio}
-          onChange={(e) => setAboutBio(e.target.value)}
+          value={current.aboutBio}
+          onChange={(e) => updateCurrentLocale({ aboutBio: e.target.value })}
           rows={4}
           className="mt-1.5 w-full border border-ink/20 bg-transparent px-3 py-2 font-body text-sm text-ink focus:border-brass focus:outline-none"
         />
@@ -104,7 +190,7 @@ export function ProfileForm({ profile }: { profile: ProfileConfig }) {
           風格標籤
         </label>
         <ul className="mt-2 flex flex-wrap gap-2">
-          {styleTags.map((tag) => (
+          {current.styleTags.map((tag) => (
             <li key={tag}>
               <button
                 type="button"
@@ -140,6 +226,10 @@ export function ProfileForm({ profile }: { profile: ProfileConfig }) {
           </button>
         </div>
       </div>
+
+      <p className="font-mono text-[11px] text-ink/40">
+        以上四個欄位依語言分別儲存；中文為必填（其他語系缺漏時前台會顯示中文版）。以下聯絡資訊不分語言。
+      </p>
 
       {(
         [
@@ -178,6 +268,14 @@ export function ProfileForm({ profile }: { profile: ProfileConfig }) {
       </div>
     </form>
   );
+}
+
+function mapLocales<T>(fn: (locale: Locale) => T): { "zh-TW": T } & Partial<Record<Exclude<Locale, "zh-TW">, T>> {
+  const result = {} as Record<Locale, T>;
+  for (const locale of LOCALES) {
+    result[locale] = fn(locale);
+  }
+  return result as { "zh-TW": T } & Partial<Record<Exclude<Locale, "zh-TW">, T>>;
 }
 
 function Field({

@@ -44,13 +44,16 @@ model User {
 }
 
 /// 後台維護：個人品牌與首頁設定（單筆紀錄 Site Meta）
+/// heroTitle/heroSubtitle/aboutBio/styleTags 是語系對照 JSON，見
+/// openspec/changes/profile-i18n-content/design.md Decision 1：
+/// { "zh-TW": ..., "en": ..., "ja": ..., "ko": ... }（styleTags 每個語系是陣列）
 model ProfileConfig {
   id           String   @id @default("site-config")
-  heroTitle    String
-  heroSubtitle String
+  heroTitle    Json
+  heroSubtitle Json
   heroVideoUrl String?
-  aboutBio     String   @db.Text
-  styleTags    String[]
+  aboutBio     Json
+  styleTags    Json
   instagramUrl String?
   youtubeUrl   String?
   contactEmail String?

@@ -7,7 +7,29 @@ import {
   validateFeaturedVideoInput,
   type ProfileUpdateInput,
   type FeaturedVideoInput,
+  type LocalizedTextInput,
+  type LocalizedStringArrayInput,
 } from "@/lib/validation/profile";
+
+// Trims every locale's value and drops empty ones (except "zh-TW", the
+// required fallback source) before writing to the JSON column.
+function cleanLocalizedText(input: LocalizedTextInput) {
+  const result: Record<string, string> = { "zh-TW": input["zh-TW"].trim() };
+  for (const [locale, value] of Object.entries(input)) {
+    if (locale === "zh-TW" || !value?.trim()) continue;
+    result[locale] = value.trim();
+  }
+  return result;
+}
+
+function cleanLocalizedStringArray(input: LocalizedStringArrayInput) {
+  const result: Record<string, string[]> = { "zh-TW": input["zh-TW"] };
+  for (const [locale, value] of Object.entries(input)) {
+    if (locale === "zh-TW" || !value?.length) continue;
+    result[locale] = value;
+  }
+  return result;
+}
 
 export type ActionResult =
   | { ok: true }
@@ -33,10 +55,10 @@ export async function updateProfile(
     await prisma.profileConfig.update({
       where: { id: "site-config" },
       data: {
-        heroTitle: input.heroTitle.trim(),
-        heroSubtitle: input.heroSubtitle.trim(),
-        aboutBio: input.aboutBio.trim(),
-        styleTags: input.styleTags,
+        heroTitle: cleanLocalizedText(input.heroTitle),
+        heroSubtitle: cleanLocalizedText(input.heroSubtitle),
+        aboutBio: cleanLocalizedText(input.aboutBio),
+        styleTags: cleanLocalizedStringArray(input.styleTags),
         instagramUrl: input.instagramUrl?.trim() || null,
         youtubeUrl: input.youtubeUrl?.trim() || null,
         contactEmail: input.contactEmail?.trim() || null,

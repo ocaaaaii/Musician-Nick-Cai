@@ -1,8 +1,20 @@
+export type Locale = "zh-TW" | "en" | "ja" | "ko";
+
+// Every locale key is optional except "zh-TW", which the front end falls
+// back to when a translation is missing - see
+// openspec/changes/profile-i18n-content/design.md, Decision 5.
+export type LocalizedTextInput = { "zh-TW": string } & Partial<
+  Record<Exclude<Locale, "zh-TW">, string>
+>;
+export type LocalizedStringArrayInput = { "zh-TW": string[] } & Partial<
+  Record<Exclude<Locale, "zh-TW">, string[]>
+>;
+
 export type ProfileUpdateInput = {
-  heroTitle: string;
-  heroSubtitle: string;
-  aboutBio: string;
-  styleTags: string[];
+  heroTitle: LocalizedTextInput;
+  heroSubtitle: LocalizedTextInput;
+  aboutBio: LocalizedTextInput;
+  styleTags: LocalizedStringArrayInput;
   instagramUrl?: string;
   youtubeUrl?: string;
   contactEmail?: string;
@@ -41,13 +53,13 @@ export function validateProfileUpdate(
 ): ProfileUpdateFieldErrors {
   const errors: ProfileUpdateFieldErrors = {};
 
-  if (!input.heroTitle.trim()) {
+  if (!input.heroTitle["zh-TW"].trim()) {
     errors.heroTitle = "required";
   }
-  if (!input.heroSubtitle.trim()) {
+  if (!input.heroSubtitle["zh-TW"].trim()) {
     errors.heroSubtitle = "required";
   }
-  if (!input.aboutBio.trim()) {
+  if (!input.aboutBio["zh-TW"].trim()) {
     errors.aboutBio = "required";
   }
 

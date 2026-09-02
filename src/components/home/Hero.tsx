@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { useTranslations } from "next-intl";
-import type { ProfileConfig } from "@prisma/client";
+import type { ResolvedProfileConfig } from "@/lib/content/profile";
 
-export function Hero({ profile }: { profile: ProfileConfig }) {
+export function Hero({ profile }: { profile: ResolvedProfileConfig }) {
   const rootRef = useRef<HTMLElement>(null);
   const t = useTranslations("hero");
 
