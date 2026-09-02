@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Play } from "lucide-react";
 import { WatermarkedPreview } from "./WatermarkedPreview";
@@ -58,18 +59,12 @@ export function SheetMusicDetail({ sheet }: { sheet: SerializedSheetMusic }) {
             {t("listen")}
           </button>
 
-          <div>
-            <button
-              type="button"
-              disabled
-              className="inline-flex cursor-not-allowed items-center gap-2 bg-ink/20 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-ink/40"
-            >
-              {t("addToCart")}
-            </button>
-            <p className="mt-1.5 font-mono text-[11px] text-ink/40">
-              {t("comingSoon")}
-            </p>
-          </div>
+          <Link
+            href={`/checkout/${sheet.id}`}
+            className="inline-flex items-center gap-2 bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-cream transition-colors hover:bg-brass"
+          >
+            {t("buyNow")}
+          </Link>
         </div>
       </div>
     </div>

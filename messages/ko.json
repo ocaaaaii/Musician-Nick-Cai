@@ -42,8 +42,16 @@
     "genreLabel": "장르",
     "keyLabel": "조성",
     "listen": "미리듣기",
-    "addToCart": "장바구니에 담기",
-    "comingSoon": "장바구니 기능은 준비 중입니다"
+    "buyNow": "지금 구매"
+  },
+  "checkout": {
+    "title": "결제",
+    "paymentMethod": "결제 방법",
+    "credit": "신용카드",
+    "webatm": "WebATM",
+    "cvs": "편의점 코드결제",
+    "submit": "결제하기",
+    "formError": "이메일 형식과 결제 방법을 확인해 주세요"
   },
   "notFound": {
     "title": "페이지를 찾을 수 없습니다",

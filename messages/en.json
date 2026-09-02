@@ -42,8 +42,16 @@
     "genreLabel": "Genre",
     "keyLabel": "Key",
     "listen": "Listen",
-    "addToCart": "Add to Cart",
-    "comingSoon": "Cart coming soon"
+    "buyNow": "Buy Now"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "paymentMethod": "Payment Method",
+    "credit": "Credit Card",
+    "webatm": "WebATM",
+    "cvs": "Convenience Store Code",
+    "submit": "Proceed to Payment",
+    "formError": "Please check your email format and select a payment method"
   },
   "notFound": {
     "title": "Page not found",

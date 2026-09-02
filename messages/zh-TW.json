@@ -42,8 +42,16 @@
     "genreLabel": "曲風",
     "keyLabel": "調性",
     "listen": "試聽",
-    "addToCart": "加入購物車",
-    "comingSoon": "購物車功能開發中"
+    "buyNow": "立即購買"
+  },
+  "checkout": {
+    "title": "結帳",
+    "paymentMethod": "付款方式",
+    "credit": "信用卡",
+    "webatm": "WebATM",
+    "cvs": "超商代碼",
+    "submit": "前往付款",
+    "formError": "請確認 Email 格式正確並選擇付款方式"
   },
   "notFound": {
     "title": "找不到這個頁面",

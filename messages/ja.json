@@ -42,8 +42,16 @@
     "genreLabel": "ジャンル",
     "keyLabel": "調性",
     "listen": "試聴",
-    "addToCart": "カートに追加",
-    "comingSoon": "カート機能は準備中です"
+    "buyNow": "今すぐ購入"
+  },
+  "checkout": {
+    "title": "お支払い",
+    "paymentMethod": "支払い方法",
+    "credit": "クレジットカード",
+    "webatm": "WebATM",
+    "cvs": "コンビニ決済",
+    "submit": "支払いへ進む",
+    "formError": "Email の形式と支払い方法をご確認ください"
   },
   "notFound": {
     "title": "ページが見つかりません",
