@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { FeaturedVideo } from "@prisma/client";
 import { getYoutubeThumbnail } from "@/lib/youtube";
 import { FadeDivider } from "@/components/ui/FadeDivider";
+import { FeaturedVideosCarousel } from "./FeaturedVideosCarousel";
 
 // Instagram Reels don't have a public thumbnail API (unlike YouTube), so
 // these render via Instagram's own oEmbed widget instead of the custom
@@ -83,7 +84,7 @@ export function FeaturedVideos({ videos }: { videos: FeaturedVideo[] }) {
       <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
         {t("title")}
       </h2>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <FeaturedVideosCarousel>
         {sorted.map((video) =>
           video.platform === "INSTAGRAM" ? (
             <InstagramCard key={video.id} video={video} />
@@ -91,7 +92,7 @@ export function FeaturedVideos({ videos }: { videos: FeaturedVideo[] }) {
             <YoutubeCard key={video.id} video={video} />
           )
         )}
-      </div>
+      </FeaturedVideosCarousel>
       </section>
       {hasInstagram && (
         <Script
